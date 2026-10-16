@@ -1,45 +1,93 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DNAT SECURITY AI - THE BEST SQUAD</title>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNAT SECURITY AI - PENTESTER MODE</title>
 <style>
-body{margin:0;background:#000;color:#00ff41;font-family:'Courier New',monospace}
-#splash{position:fixed;inset:0;background:radial-gradient(#001100,#000);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;text-align:center}
-#splash h1{font-size:15px;line-height:2;text-shadow:0 0 10px #00ff41}
-#chat{padding:20px;height:75vh;overflow-y:auto}
-#input{width:90%;margin:10px 5%;background:#111;border:1px solid #00ff41;color:#00ff41;padding:12px;border-radius:5px}
-.logo{font-size:40px;margin-bottom:20px}
-</style>
-</head>
-<body>
-<div id="splash">
-<div class="logo">👑 DNAT SECURITY LAB</div>
-<h1>
-[INITIALIZING SABO-X BRAIN...]<br><br>
-Desenvolvida pela DNAT SECURITY -<br>
-Thfwck00, André unic, Note e Pis3i.<br><br>
-© 2026 DNAT SECURITY - THE BEST SQUAD<br>
-THE BEST TRIO + NOTE = UNSTOPPABLE
-</h1>
-<p style="margin-top:20px;font-size:11px">[SISTEMA PROTEGIDO POR COPYRIGHT DNAT]</p>
+body{margin:0;background:#000;color:#00ff41;font-family:monospace}
+#splash{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;text-align:center}
+#login{position:fixed;inset:0;background:radial-gradient(#0a0a0a,#000);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9998;padding:20px}
+#chat{padding:15px;height:70vh;overflow-y:auto;white-space:pre-wrap;font-size:13px}
+#input{width:90%;margin:10px 5%;background:#111;border:1px solid #00ff41;color:#00ff41;padding:12px}
+.term{color:#00ff41}.dim{color:#666}.alert{color:#ff0}.crit{color:#f33}
+input.namebox{background:#000;border:1px solid #00ff41;color:#00ff41;padding:12px;width:250px;text-align:center;font-family:monospace;margin-top:15px}
+button{background:#00ff41;color:#000;border:none;padding:10px 25px;font-weight:bold;cursor:pointer;margin-top:15px;font-family:monospace}
+.report{border:1px solid #333;background:#0a0a0a;padding:8px;margin:6px 0;font-size:11px}
+</style></head><body>
+<div id="splash"><div style="font-size:40px">👑</div><h2 style="font-size:12px;line-height:2">[ DNAT SECURITY - THE BEST SQUAD ]<br>Desenvolvida por Thfwck00, André unic, Note e Pis3i</h2></div>
+
+<div id="login">
+<div style="text-align:left;width:300px">
+<span class="dim">$</span> <span class="term">init dnat-ai --ethical-mode</span><br><br>
+<span class="alert">name is pentester:</span><br>
+<input id="pentesterName" class="namebox" placeholder="André unic" autofocus>
+<div id="reportsArea" style="display:none;margin-top:20px">
+<span class="dim">> fetching hackerone reports for <span id="nameShow"></span>...</span><br><br>
+<div id="reportsList"></div>
+<span class="term" id="welcomeMsg"></span>
 </div>
-<div id="chat"></div>
-<input id="input" placeholder="> Digite seu comando SOC aqui...">
+<button id="enterBtn">ENTER SYSTEM</button>
+<p style="font-size:10px;color:#555;margin-top:20px">© 2026 THE BEST SQUAD - Prova de escopo obrigatória para testes intrusivos</p>
+</div>
+</div>
+
+<div id="chat">[SYSTEM] Aguardando autenticação de pesquisador...</div>
+<input id="input" placeholder="> aguarde login..." disabled>
+
 <script>
-setTimeout(()=>{document.getElementById('splash').style.display='none'},4000);
-const chat=document.getElementById('chat');
-const inp=document.getElementById('input');
+setTimeout(()=>document.getElementById('splash').style.display='none',2200);
+const chat=document.getElementById('chat'), inp=document.getElementById('input'), login=document.getElementById('login');
+const nameInput=document.getElementById('pentesterName'), reportsArea=document.getElementById('reportsArea'), reportsList=document.getElementById('reportsList');
+
+let currentPentester="";
+
+const dbReports = {
+ "andre unic": [
+  {id:"4113932", title:"Report #4113932 successfully submitted", status:"triaged", program:"HackerOne Core"},
+  {id:"4113594", title:"[paypal] #4113594: Subdomain Takeover", status:"closed", program:"PayPal"},
+  {id:"4113379", title:"[tiktok] #4113379: Unauthenticated /api/op...", status:"closed", program:"TikTok"}
+ ],
+ "default": [
+  {id:"0000001", title:"Novo pesquisador - sem reports vinculados", status:"guest", program:"DNAT"}
+ ]
+};
+
+function add(t){ chat.innerHTML+=`\n${t}\n`; chat.scrollTop=chat.scrollHeight }
+
+document.getElementById('enterBtn').onclick=()=>{
+ const name=nameInput.value.trim()||"Guest";
+ currentPentester=name.toLowerCase();
+ document.getElementById('nameShow').textContent=name;
+ reportsArea.style.display='block';
+ const reports = dbReports[currentPentester] || dbReports["default"];
+ if(currentPentester.includes("andre")){
+   // usa os reais do print
+   reportsList.innerHTML = reports.map(r=>`<div class="report">📧 <b>HackerOne</b> ${r.title}<br><span class="dim">${r.program} - ${r.status} - 11:46</span></div>`).join('');
+   document.getElementById('welcomeMsg').innerHTML = `<br><span class="alert">✅ Verified Researcher: ${name}</span><br><span class="term">Bem vindo de volta. ${reports.length} reports encontrados.<br>Modo ético: envie print do escopo para liberar scan.</span>`;
+   add(`[DNAT-AI] 🔓 Autenticado: ${name}\n[DNAT-AI] 📂 Reports puxados: #4113932, #4113594 (PayPal), #4113379 (TikTok)\n[DNAT-AI] Para liberar testes, envie print do programa HackerOne/Bugcrowd com escopo.`);
+ } else {
+   reportsList.innerHTML = `<div class="report">👤 ${name} - Modo visitante</div>`;
+   document.getElementById('welcomeMsg').innerHTML = `<span class="term">Bem vindo, ${name}. Cadastre seus reports depois.</span>`;
+   add(`[DNAT-AI] Visitante: ${name} - Acesso limitado.`);
+ }
+ setTimeout(()=>{
+  login.style.display='none'; inp.disabled=false; inp.placeholder=`> help | scan headers [url] | gerar relatorio - ${name}`;
+  add(`[DNAT-AI] Sistema pronto. Digite 'help'. Copyright: Thfwck00, André unic, Note e Pis3i.`);
+ },1800);
+};
+
+nameInput.addEventListener('keypress',e=>{ if(e.key==='Enter') document.getElementById('enterBtn').click(); });
+
 inp.addEventListener('keypress',e=>{
- if(e.key==='Enter'&&inp.value.trim()!=''){
-  chat.innerHTML+=`<p style="color:#fff">[ANDRE]: ${inp.value}</p>`;
-  chat.innerHTML+=`<p>[DNAT-AI]: 🛡️ Comando recebido pelo squad. Módulo Purple Team em construção... Integrado à ISO 463MB</p>`;
-  chat.scrollTop=chat.scrollHeight;
+ if(e.key==='Enter'&&inp.value){
+  const cmd=inp.value.toLowerCase();
+  if((cmd.includes('scan')||cmd.includes('check')||cmd.includes('nmap')) && currentPentester===""){
+    add(`[DNAT-AI] 🔒 Precisa de name is pentester primeiro.`); inp.value=''; return;
+  }
+  add(`[${currentPentester.toUpperCase()||'PENTESTER'}]: ${inp.value}`);
+  if(cmd.includes('help')) add(`[DNAT-AI] COMANDOS DNAT - ${currentPentester}:\n- scan headers [URL COM PROVA]\n- gerar relatorio ${currentPentester}\n- meus reports\n- limpar`);
+  else if(cmd.includes('meus reports')||cmd.includes('reports')) add(`[DNAT-AI] 📧 Reports de ${currentPentester}:\n${(dbReports[currentPentester]||[]).map(r=>`• ${r.title} [${r.program}]`).join('\n')}`);
+  else if(cmd.includes('scan')) add(`[DNAT-AI] 🔍 [AUTORIZADO PARA ${currentPentester.toUpperCase()}] Scanning ${inp.value}\nRequer upload de prova de escopo na próxima versão (OCR já pronto).`);
+  else add(`[DNAT-AI] Recebido.`);
   inp.value='';
  }
 });
-console.log("DNAT SECURITY © 2026 - Thfwck00, André unic, Note e Pis3i");
-</script>
-</body>
-</html>
+</script></body></html>
