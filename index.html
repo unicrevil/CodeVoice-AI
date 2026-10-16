@@ -1,91 +1,110 @@
 <!DOCTYPE html>
-<html lang="pt-br"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DNAT SECURITY AI v2.5 - THE BEST SQUAD</title>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNAT SECURITY OS v1.0 - THE BEST SQUAD</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-body{margin:0;background:#000;color:#0f0;font-family:monospace}
-h1{text-align:center;color:#0f0;text-shadow:0 0 12px #0f0;margin:10px 0 0}
-.sub{text-align:center;font-size:9px;color:#0a0;margin-bottom:10px}
-.box{width:93%;max-width:640px;margin:8px auto;border:1px solid #0f0;padding:12px;background:#050505;border-radius:10px}
-input,button{width:97%;padding:12px;margin:6px 0;border-radius:8px;font-family:monospace}
-input{background:#000;color:#0f0;border:1px solid #0f0}
-button{background:#0f0;color:#000;font-weight:bold;border:none}
-.btn-pdf{background:#fff;color:#000;border:2px solid #0f0;margin-top:10px}
-.msg{margin:6px 0;padding:10px;border-radius:8px;font-size:13px;white-space:pre-wrap}
-.user{background:#0f0;color:#000;text-align:right;margin-left:18px}
-.ai{background:#111;border:1px solid #0f0;color:#0f0;margin-right:18px}
-#chatBox{max-height:400px;overflow:auto;border:1px solid #222;padding:8px;background:#000}
-</style></head>
+body{background:#000;color:#00ff41;font-family:monospace;padding:15px;margin:0}
+#term{border:1px solid #00ff41;padding:15px;min-height:90vh}
+h1{color:#00ff41;text-align:center;margin:5px;font-size:18px}
+.sub{text-align:center;color:#fff;font-size:12px;margin-bottom:15px}
+.log{white-space:pre-wrap;line-height:1.5;margin:10px 0}
+input{width:100%;background:#111;color:#00ff41;border:1px solid #00ff41;padding:10px;font-family:monospace;outline:none}
+button{margin-top:10px;background:#00ff41;color:#000;border:none;padding:8px 15px;font-family:monospace;cursor:pointer;font-weight:bold}
+.founder{color:#00ffff}.visitor{color:#ffaa00}.denied{color:#ff0040}.valid{color:#00ff41;font-weight:bold}
+</style>
+</head>
 <body>
-<h1>DNAT SECURITY AI</h1>
-<div class="sub">Thfwck00, Andre unic, Note, Pis3i, Dudu, W Th - THE BEST SQUAD - v2.5 NO FALSE POSITIVE</div>
-<div class="box" id="login">
-<div style="color:#0f0;font-size:11px">$ init dnat-ai --ethical-mode<br>name is hunter:</div>
-<input id="nameInput" placeholder="Digite: Thfwck00, Note, Pis3i, Andre unic, Dudu, W Th">
-<div id="statusBox" style="background:#111;padding:6px;font-size:11px;min-height:18px;margin-top:4px"></div>
-<button id="enterBtn">ENTER SYSTEM</button>
+<div id="term">
+<h1>DNAT SECURITY AI v2.6 - THE BEST SQUAD</h1>
+<div class="sub">4 FOUNDERS ONLY - NO FALSE POSITIVE - 16/10/2026<br>Thfwck00 (W Th) | Andre unic | Note | Pis3i (Dudu)</div>
+<div id="out" class="log">DNAT SECURITY OS v1.0 [MOBILE BASE] Inicializado...
+Modo: FOUNDER ONLY
+
+Digite seu nome pra logar:
+Ex: Thfwck00, Andre unic, Note, Pis3i
 </div>
-<div class="box" id="chatArea" style="display:none">
-<div id="chatBox"></div>
-<input id="chatInput" placeholder="Digite: Pentest ou cybersecurity ou CyberHunter">
-<button id="sendBtn">ENVIAR</button>
-<button class="btn-pdf" id="pdfBtn">BAIXAR REPORT THE BEST SQUAD - SEM FALSO POSITIVO (PDF)</button>
+<input id="in" placeholder="Digite seu nome ou comando..." autofocus>
+<button onclick="baixarPDF()">BAIXAR REPORT THE BEST SQUAD - SEM FALSO POSITIVO (PDF)</button>
+<div style="margin-top:10px;font-size:11px;color:#888">Contato comercial: Thfwck00 (W Th) - THE BEST SQUAD only</div>
 </div>
 <script>
-const founders=["Thfwck00","Note","Pis3i","Dudu","W Th"];
-let cur="", logs=[];
-document.getElementById('nameInput').addEventListener('input',e=>{
- let n=e.target.value.trim();let s=document.getElementById('statusBox');
- if(founders.some(f=>n.toLowerCase().includes(f.toLowerCase()))||n.toLowerCase().includes('dudu')) s.innerHTML='<span style="color:#0f0">FOUNDER Verified: '+n+' - THE BEST SQUAD</span>';
- else s.innerHTML=n?'Hunter: '+n:'';
-});
-document.getElementById('enterBtn').onclick=()=>{
- let n=document.getElementById('nameInput').value.trim();if(!n)return;
- cur=n;document.getElementById('chatArea').style.display='block';document.getElementById('login').style.display='none';
- document.getElementById('chatBox').innerHTML='<div class="msg ai">[PENTEST] Boa '+cur+'! v2.5 NO FALSE POSITIVE ativo. Digite: tiktok #4113379 ou paypal #4113594 ou recon</div>';
- logs.push('LOGIN: '+cur);
+const FOUNDERS_MAP = {
+  "thfwck00":"Thfwck00 (W Th) - FOUNDER + COMERCIAL",
+  "w th":"Thfwck00 (W Th) - FOUNDER + COMERCIAL",
+  "w th #amo":"Thfwck00 (W Th) - FOUNDER + COMERCIAL",
+  "andre unic":"Andre unic - VERIFIED HUNTER",
+  "note":"Note Squad Pentest - RECON LEAD",
+  "note squad pentest":"Note Squad Pentest - RECON LEAD",
+  "pis3i":"Pis3i (Dudu #amo O André) - EXPLOIT",
+  "dudu":"Pis3i (Dudu #amo O André) - EXPLOIT",
+  "dudu #amo o andré":"Pis3i (Dudu #amo O André) - EXPLOIT",
+  "dudu #amo":"Pis3i (Dudu #amo O André) - EXPLOIT"
 };
-function getResponse(q){
- let l=q.toLowerCase().trim();
- if(l.includes('tiktok')||l.includes('4113379')) return '[VALIDATED - SEM FALSO POSITIVO] TikTok IDOR #4113379 - THE BEST SQUAD\nTarget: /api/user/email?id=123\nStatus: CONFIRMADO\nFix: session.user_id == param.id';
- if(l.includes('paypal')||l.includes('4113594')||l.includes('takeover')) return '[VALIDATED - SEM FALSO POSITIVO] PayPal Takeover #4113594 - THE BEST SQUAD\nTarget: shop.paypal.com CNAME -> S3\nStatus: CONFIRMADO\nFix: Remover CNAME';
- if(l.includes('recon')||l.includes('como fazer recon')) return '[PENTEST] Stack THE BEST SQUAD: subfinder -d alvo.com | httpx -td -sc | nuclei -t cves/ -o validated.txt - THE BEST SQUAD: Thfwck00, Note, Pis3i, Dudu, W Th, Andre unic';
- if(l==='pentest') return '[PENTEST MODE] Boa '+cur+'! Digite: tiktok #4113379, paypal #4113594 ou recon';
- if(l==='cybersecurity') return '[CYBERSECURITY] Boa '+cur+'! Mitigar SSRF e IDOR';
- if(l==='cyberhunter') return '[CYBERHUNTER] Boa '+cur+'! DeviceNetworkEvents | where count>10';
- return '[DNAT] Recebido: '+q+' | Dicas: tiktok #4113379 | paypal #4113594 | recon';
+let currentUser=null, isFounder=false, logged=false;
+const out=document.getElementById('out'), inp=document.getElementById('in');
+function print(t,c=""){ out.innerHTML+=`\n<span class="${c}">${t}</span>\n`; out.scrollTop=out.scrollHeight; }
+function checkLogin(nome){
+  let k=nome.toLowerCase().trim();
+  for(let key in FOUNDERS_MAP){ if(k.includes(key)){ currentUser=FOUNDERS_MAP[key]; isFounder=true; logged=true; return `[FOUNDER VERIFIED] Boa ${currentUser}!\n[PENTEST MODE] THE BEST SQUAD - NO FALSE POSITIVE\nDigite: tiktok #4113379, paypal #4113594, recon, sobre`; } }
+  currentUser=nome; isFounder=false; logged=true;
+  return `[VISITANTE MODE] Fala ${nome} - Acesso limitado.\nEssa IA é privada da THE BEST SQUAD (4 founders).\n\nContato: Thfwck00 (conta comercial)\nComandos liberados: sobre, contato\nBloqueado: tiktok #4113379, paypal #4113594 apenas founders.`;
 }
-function sendMsg(){
- let inp=document.getElementById('chatInput');let q=inp.value.trim();if(!q)return;
- let box=document.getElementById('chatBox');
- let u=document.createElement('div');u.className='msg user';u.innerText=q;box.appendChild(u);logs.push('USER: '+q);
- let a=document.createElement('div');a.className='msg ai';a.innerText=getResponse(q);box.appendChild(a);logs.push('AI: '+a.innerText);
- box.scrollTop=box.scrollHeight;inp.value='';
+function handleCmd(cmd){
+  let c=cmd.toLowerCase().trim();
+  if(!c) return;
+  print(`> ${cmd}`,"");
+  if(!logged){ print(checkLogin(cmd), isFounder?"founder":"visitor"); return; }
+  if(c==="sobre"||c==="sobre o squad"){
+    print(`=== DNAT SECURITY OS v1.0 - THE BEST SQUAD [MOBILE BASE] ===\n4 FOUNDERS:\n1. Thfwck00 (W Th) - Founder + Comercial - ${new Date().toLocaleString()}\n2. Andre unic - Hunter\n3. Note Squad Pentest - Recon\n4. Pis3i (Dudu #amo O André) - Exploit\n\n2 VALIDADOS SEM FALSO POSITIVO:\n#4113594 PayPal Subdomain Takeover\n#4113379 TikTok IDOR\n\nLink: https://unicrevil.github.io/CodeVoice-AI/\nTAMO ON CARALHO 🔥`,"founder"); return;
+  }
+  if(c==="contato"||c==="contato comercial"){
+    print(`Contato comercial: Thfwck00 (W Th)\nWhatsApp Grupo: DNAT SECURITY OS v1.0\nAcesso: apenas com convite founder\n@todos agr n tem mais como pular fora`,"visitor"); return;
+  }
+  if(c.includes("tiktok")){
+    if(!isFounder){ print(`[ACESSO NEGADO - VISITANTE]\nFalha #4113379 é privada THE BEST SQUAD\nApenas 4 founders podem validar.\nContato: Thfwck00`,"denied"); return; }
+    print(`[VALIDATED - SEM FALSO POSITIVO] TikTok IDOR #4113379 - THE BEST SQUAD\nTarget: /api/user/email?id=123\nStatus: CONFIRMADO - Sem falso positivo\nImpact: PII Leak\nFix: session.user_id == param.id\nHunter: ${currentUser}\nSquad: THE BEST SQUAD - 4 founders`,"valid"); return;
+  }
+  if(c.includes("paypal")||c.includes("4113594")){
+    if(!isFounder){ print(`[ACESSO NEGADO - VISITANTE]\nFalha #4113594 PayPal privada.\nApenas founders.`,"denied"); return; }
+    print(`[VALIDATED - SEM FALSO POSITIVO] PayPal Subdomain Takeover #4113594 - THE BEST SQUAD\nTarget: paypal.com subdomain\nStatus: CONFIRMADO - Sem falso positivo\nFix: Remove dangling DNS\nHunter: ${currentUser}`,"valid"); return;
+  }
+  if(c==="recon"){
+    print(`[PENTEST] Stack THE BEST SQUAD: subfinder | httpx | nuclei | dalfox\nModo: ${isFounder?'FOUNDER - full':'VISITANTE - limitado'}`,""); return;
+  }
+  if(c==="pentest"){
+    print(`[PENTEST MODE] Boa ${currentUser}! Digite: tiktok #4113379, paypal #4113594 ou recon`,""); return;
+  }
+  print(`Comando: ${cmd}\nModo: ${isFounder?'FOUNDER':'VISITANTE'}\nTente: pentest, sobre, recon`,"");
 }
-document.getElementById('sendBtn').onclick=sendMsg;
-document.getElementById('chatInput').addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg()});
-document.getElementById('pdfBtn').onclick=()=>{
- const {jsPDF}=window.jspdf;const doc=new jsPDF();doc.setFont('courier');
- doc.setFontSize(16);doc.text('DNAT SECURITY AI v2.5',10,14);
- doc.setFontSize(12);doc.text('THE BEST SQUAD - NO FALSE POSITIVE',10,20);
- doc.setFontSize(9);
- doc.text('Hunter: '+cur,10,26);
- doc.text('Squad Members: Thfwck00, Andre unic, Note, Pis3i, Dudu, W Th',10,31);
- doc.text('Date: '+new Date().toLocaleString(),10,36);
- doc.text('Project: unicrevil.github.io/CodeVoice-AI',10,41);
- doc.setFontSize(11);doc.text('=== APENAS FALHAS VALIDADAS - SEM FALSO POSITIVO ===',10,50);
- doc.setFontSize(8);
- doc.text('1. [VALIDATED - HIGH] PayPal #4113594 - THE BEST SQUAD',10,56);
- doc.text('Status: CONFIRMADO - Sem falso positivo',10,61);
- doc.text('Evidence: CNAME S3 nao reclamado',10,66);
- doc.text('Fix: Remover CNAME dangling',10,71);
- doc.text('2. [VALIDATED - MEDIUM] TikTok #4113379 - THE BEST SQUAD',10,96);
- doc.text('Status: CONFIRMADO - Sem falso positivo',10,101);
- doc.text('Evidence: IDOR /api/user/email?id=',10,106);
- doc.text('Fix: session.user_id == param.id',10,111);
- doc.setFontSize(9);doc.text('THE BEST SQUAD: Thfwck00, Andre unic, Note, Pis3i, Dudu, W Th - 2026',10,130);
- doc.save('DNAT-THE-BEST-SQUAD-VALIDATED-'+(cur||'Andre')+'-'+Date.now()+'.pdf');
-};
+inp.addEventListener('keydown',e=>{ if(e.key==='Enter'){ handleCmd(inp.value); inp.value=''; } });
+function baixarPDF(){
+  const {jsPDF}=window.jspdf; const doc=new jsPDF();
+  doc.setFont("courier"); doc.setFontSize(14);
+  doc.text("DNAT SECURITY AI v2.6",10,15);
+  doc.setFontSize(11); doc.text("THE BEST SQUAD - NO FALSE POSITIVE - 4 FOUNDERS",10,22);
+  doc.setFontSize(9);
+  doc.text(`Hunter: ${currentUser||'Visitante - Acesso Negado'}`,10,30);
+  doc.text(`Squad Members: Thfwck00 (W Th), Andre unic, Note, Pis3i (Dudu #amo O André)`,10,35);
+  doc.text(`Date: ${new Date().toLocaleString()} - ${isFounder?'FOUNDER VERIFIED':'VISITANTE MODE'}`,10,40);
+  doc.text(`Project: unicrevil.github.io/CodeVoice-AI v2.6`,10,45);
+  doc.text(`===========================================`,10,52);
+  doc.text(`APENAS FALHAS VALIDADAS - SEM FALSO POSITIVO`,10,58);
+  doc.text(`1. [VALIDATED - HIGH] PayPal #4113594 - THE BEST SQUAD`,10,66);
+  doc.text(` Status: CONFIRMADO - Sem falso positivo`,10,71);
+  doc.text(` Target: paypal.com subdomain takeover`,10,76);
+  doc.text(`2. [VALIDATED - MEDIUM] TikTok #4113379 - THE BEST SQUAD`,10,84);
+  doc.text(` Status: CONFIRMADO - Sem falso positivo`,10,89);
+  doc.text(` Target: /api/user/email?id=123 - IDOR PII`,10,94);
+  doc.text(` Fix: session.user_id == param.id`,10,99);
+  doc.text(`===========================================`,10,107);
+  doc.text(`Contato comercial: Thfwck00 (W Th) - Founder Only`,10,113);
+  doc.text(`THE BEST SQUAD - De erro pra NASA - 2026`,10,118);
+  doc.save(`DNAT-THE-BEST-SQUAD-v2.6-${(currentUser||'visitante').replace(/[^a-z]/gi,'_')}.pdf`);
+  print(`PDF v2.6 GERADO: 4 founders - ${currentUser||'visitante'}`,"valid");
+}
 </script>
-</body></html>
+</body>
+</html>
